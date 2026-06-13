@@ -1,8 +1,12 @@
 package com.example.shop.entities;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,12 +39,13 @@ public class Order {
     private String customerEmail;
 
     @Column(name = "total_price", nullable = false)
-    private String totalPrice;
+    private BigDecimal totalPrice;
 
     @Column(nullable = false)
     private String status;
 
-    @OneToMany(mappedBy = "order")
+    @JsonManagedReference
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItem;
 
     @Column(name = "created_at")
